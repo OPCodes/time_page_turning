@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			*{
+				margin:0px;
+				padding:0px;
+			}
+			body{
+				background: #232323; color: #fff; font-family: "微软雅黑"}
+			img{
+				width: 150px;
+				height: 210px;
+				border: none;
+				vertical-align: top;
+			}
+			.box{
+				width: 1200px;
+				height: 210px;
+				margin: 100px auto;
+			}
+			ul li{
+				list-style: none;
+				vertical-align: top;
+				width: 150px;
+				height: 210px;
+				overflow: hidden;
+				float: left;
+				position: relative;
+			}
+			ul li p{
+				width: 150px;
+				height: 420px;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		</style>
+		<script src="js/MTween.js"></script>
+		<script src="js/tools.js"></script>	
+		<script>
+			function addZero(n){
+				return n < 10 ? "0"+n : n; 
+			}
+			window.onload = function (){
+
+				var list = $("#list");
+				var allLi = $("li",list);
+				var oneLiH = parseInt(getStyle(allLi[0],"height"));
+				var allP = $("p",list);
+				var firImgs = $(".first",list);
+				var secImgs = $(".second",list);
+				var d = new Date();
+                var str = addZero(d.getHours())+":"+ addZero(d.getMinutes())+":"+addZero(d.getSeconds());
+
+				for( var i = 0; i < str.length; i++ ){
+					if( str.charAt(i) === ":" ){
+                		firImgs[i].src = "img/fuh.png";
+                	} else {
+                		firImgs[i].src = "img/"+ str.charAt(i) +".png";
+                	}
+				}
+
+				var now = "";
+				var old = str;
+				var n = 0;
+
+			    
+			    setInterval(function (){
+
+			    	var d = new Date();
+                    var str = addZero(d.getHours())+":"+ addZero(d.getMinutes())+":"+addZero(d.getSeconds());
+                    now = str;
+
+
+                    for( var i = 0; i < str.length; i++ ){
+                    	if( str.charAt(i) === ":" ){
+                    		firImgs[i].src = "img/fuh.png";
+                    		setTimeout(function (n){
+                    			firImgs[n].src = "img/nfh.png";
+                    		},500,i)
+                    	} else {
+                    		secImgs[i].src = "img/"+ str.charAt(i) +".png";
+                    	}
+                    }
+
+                    function move(n,old,now){
+						MTween(allP[n],"top",500,-oneLiH,"linear",function (){
+            				allP[n].style.top = 0;
+            				firImgs[n].src = "img/"+now.charAt(n)+".png";
+            			})
+            		}
+
+	                for( var j = 0; j < str.length; j++ ){
+	                	
+                    	if( old.charAt(j) != now.charAt(j) ){
+
+            				secImgs[j].src = "img/"+now.charAt(j)+".png";
+                    		move(j,old,now);
+                    	} 
+                    }
+
+                	old = str;
+
+			    },1000)
+	
+			    
+			}
+		</script>
+	</head>
+	<body>
+
+		<div class="box">
+			<ul id="list">
+				<li>
+					<p>
+						<img src="img/0.png" alt="0" class="first" />
+						<img src="img/0.png" alt="0" class="second" />
+					</p>
+				</li>
+				<li>
+					<p>
+						<img src="img/0.png" alt="0" class="first"/>
+						<img src="img/0.png" alt="0" class="second" />
+					</p>
+				</li>
+				<li>
+					<p>
+						<img src="img/fuh.png" alt="0" class="first" />
+						<img src="img/nfh.png" alt="0" class="second" />
+					</p>
+				</li>
+				<li>
+					<p>
+						<img src="img/0.png" alt="0" class="first" />
+						<img src="img/0.png" alt="0" class="second" />
+					</p>
+				</li>
+				<li>
+					<p>
+						<img src="img/0.png" alt="0" class="first" />
+						<img src="img/0.png" alt="0" class="second" />
+					</p>
+				</li>
+				<li>
+					<p>
+						<img src="img/fuh.png" alt="0" class="first" />
+						<img src="img/nfh.png" alt="0" class="second" />
+					</p>
+				</li>
+				<li>
+					<p>
+						<img src="img/0.png" alt="0" class="first" />
+						<img src="img/0.png" alt="0" class="second" />
+					</p>
+				</li>
+				<li>
+					<p>
+						<img src="img/0.png" alt="0" class="first" />
+						<img src="img/0.png" alt="0" class="second" />
+					</p>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
